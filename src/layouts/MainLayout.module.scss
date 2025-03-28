@@ -1,0 +1,24 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+
+  .headerTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+} 
