@@ -6,6 +6,9 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  min-width: 320px;
+  position: fixed;
+  min-width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
   max-height: 100vh;
 }
