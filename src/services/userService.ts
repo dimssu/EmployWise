@@ -25,5 +25,10 @@ export const userService = {
   async getUserById(id: number): Promise<User> {
     const response = await api.get<{ data: User }>(`/users/${id}`)
     return response.data.data
+  },
+
+  async updateUser(id: number, userData: Partial<User>): Promise<User> {
+    const response = await api.put<{ data: User }>(`/users/${id}`, userData)
+    return response.data.data
   }
 } 

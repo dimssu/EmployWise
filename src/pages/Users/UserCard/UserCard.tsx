@@ -6,11 +6,12 @@ interface UserCardProps {
   last_name: string;
   email: string;
   avatar: string;
+  onClick?: () => void;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ first_name, last_name, email, avatar }) => {
+const UserCard: React.FC<UserCardProps> = ({ first_name, last_name, email, avatar, onClick }) => {
   return (
-    <div className={styles.userCard}>
+    <div className={styles.userCard} onClick={onClick}>
       <img src={avatar} alt={`${first_name} ${last_name}`} />
       <h3>{`${first_name} ${last_name}`}</h3>
       <p>{email}</p>

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './ProfileButton.module.scss';
 import { logout } from '../../../../redux/slices/authSlice';
 import { useAppDispatch } from '../../../../redux/hooks';
@@ -32,7 +31,7 @@ const ProfileButton: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <img 
-          src={"https://gravatar.com/avatar/f8658da2c3e8d5e7f2ce4f7ffb2f2c9e?s=400&d=robohash&r=x"}
+          src={"https://gravatar.com/avatar/f8658da2c3e8d5e7f2ce4f7ffb2f2c9e?s=800&d=robohash&r=x"}
           alt="Profile" 
           className={styles.avatar}
         />
