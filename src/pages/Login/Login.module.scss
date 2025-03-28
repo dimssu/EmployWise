@@ -21,25 +21,33 @@
   }
 }
 
-.formGroup {
-  margin-bottom: 1rem;
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-
-  input {
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+  .formGroup {
+    margin-bottom: 1rem;
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-
-    &:focus {
-      outline: none;
-      border-color: #646cff;
+  
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+  
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+  
+      &:focus {
+        outline: none;
+        border-color: #6021b3;
+      }
     }
   }
 }

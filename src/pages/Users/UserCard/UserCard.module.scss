@@ -1,9 +1,15 @@
 .userCard {
+  min-width: 220px;
   background: white;
   border-radius: 8px;
   padding: 1.5rem;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  :hover{
+    cursor: pointer;
+    background-color: #f3f4f6;
+  }
 
   img {
     width: 100px;

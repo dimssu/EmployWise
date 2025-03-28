@@ -25,33 +25,35 @@ const Login: React.FC = () => {
       <form onSubmit={handleSubmit} className={styles.loginForm}>
         <h1>Login</h1>
         {error && <div className={styles.error}>{error}</div>}
-        <div className={styles.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <div className={styles.formContainer}>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <Button
+            type="submit"
+            isLoading={loading}
+            fullWidth
+          >
+            Login
+          </Button>
         </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <Button
-          type="submit"
-          isLoading={loading}
-          fullWidth
-        >
-          Login
-        </Button>
       </form>
     </div>
   )
