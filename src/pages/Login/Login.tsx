@@ -22,8 +22,9 @@ const Login: React.FC = () => {
 
   return (
     <div className={styles.loginContainer}>
+      <h1 className={styles.brandHeading}>EmployWise</h1>
       <form onSubmit={handleSubmit} className={styles.loginForm}>
-        <h1>Login</h1>
+        <h2>Login</h2>
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.formContainer}>
           <div className={styles.formGroup}>
