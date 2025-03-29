@@ -95,7 +95,6 @@ const userSlice = createSlice({
         toast.error(action.payload as string)
       })
       .addCase(updateUser.pending, (state) => {
-        // state.loading = true
         state.error = null
       })
       .addCase(updateUser.fulfilled, (state, action) => {

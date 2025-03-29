@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios'
 import { toast } from 'react-toastify'
 
-const baseURL = import.meta.env.VITE_API_URL || 'https://reqres.in/api'
+const baseURL = 'https://reqres.in/api/' // to be stored in .env file
 
 export const api = axios.create({
   baseURL,
