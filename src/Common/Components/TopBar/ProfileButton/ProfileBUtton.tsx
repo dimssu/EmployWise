@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './ProfileButton.module.scss';
+import styles from './ProfileBUtton.module.scss';
 import { logout } from '../../../../redux/slices/authSlice';
 import { useAppDispatch } from '../../../../redux/hooks';
 
