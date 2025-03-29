@@ -8,7 +8,6 @@ const ProfileButton: React.FC = () => {
   const dispatch = useAppDispatch()
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -22,6 +21,19 @@ const ProfileButton: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(logout())
+  };
+
+  const handleResumeDownload = () => {
+    const link = document.createElement('a');
+    link.href = '../../../Assets/Aryan Singh Resume.pdf';
+    link.download = 'Aryan Singh Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleLinkedIn = () => {
+    window.open('https://www.linkedin.com/in/aryan-singh-9987a11b7/', '_blank');
   };
 
   return (
@@ -41,10 +53,10 @@ const ProfileButton: React.FC = () => {
         <div className={styles.dropdown}>
           <ul>
             <li>
-            <button onClick={handleLogout}>My Profile</button>
+              <button onClick={handleLinkedIn}>My LinkedIn</button>
             </li>
             <li>
-            <button onClick={handleLogout}>My Resume</button>
+            <button onClick={handleResumeDownload}>My Resume</button>
             </li>
             <li>
               <button onClick={handleLogout}>Logout</button>

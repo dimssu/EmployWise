@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { fetchUsers } from '../../redux/slices/userSlice'
+import { fetchUsers, updateUser } from '../../redux/slices/userSlice'
 import { Button } from '../../Common/Components/Button/Button'
 import styles from './Users.module.scss'
 import { useSearchParams } from 'react-router-dom'
 import UserCard from './UserCard/UserCard'
 import { SideDrawer } from '../../Common/Components/SideDrawer/SideDrawer'
-import { userService } from '../../services/userService'
-import { toast } from 'react-toastify'
 import { UserForm } from './UserForm/UserForm'
 
 const Users: React.FC = () => {
@@ -45,53 +43,18 @@ const Users: React.FC = () => {
 
   const handleEditSubmit = async () => {
     if (!selectedUser) return
-    try {
-      await userService.updateUser(selectedUser.id, editForm)
-      setIsEditing(false)
-      dispatch(fetchUsers(page))
-      toast.success('User updated successfully')
-    } catch (error) {
-      toast.error('Failed to update user')
-    }
+    
+    await dispatch(updateUser({ 
+      id: selectedUser.id, 
+      userData: editForm 
+    })).unwrap()
+    
+    setIsEditing(false)
   }
 
-  const renderDrawerFooter = () => {
-    return (
-      <>
-        {isEditing ? <Button 
-          variant="secondary" 
-          size="large" 
-          onClick={() => {
-            setIsEditing(false)
-            setEditForm({
-              first_name: selectedUser?.first_name || '',
-              last_name: selectedUser?.last_name || '',
-              email: selectedUser?.email || ''
-            })
-          }}
-        >
-          Cancel
-        </Button> : <Button 
-          variant="secondary" 
-          size="large" 
-          onClick={() => {
-            setIsEditing(false)
-            setSelectedUser(null)
-          }}
-        >
-          Close
-        </Button>}
-        {isEditing ? (
-          <Button variant="primary" size="large" onClick={handleEditSubmit}>
-            Save
-          </Button>
-        ) : (
-          <Button variant="primary" size="large" onClick={() => setIsEditing(true)}>
-            Edit
-          </Button>
-        )}
-      </>
-    )
+  const handleFormChange = (field: string, value: string) => {
+    setEditForm(prev => ({ ...prev, [field]: value }))
+    setSelectedUser(prev => prev ? { ...prev, [field]: value } : null)
   }
 
   return (
@@ -112,7 +75,11 @@ const Users: React.FC = () => {
                 last_name={user.last_name}
                 email={user.email}
                 avatar={user.avatar}
-                onClick={() => setSelectedUser(user)}
+                onClick={() => {
+                  searchParams.set('id', user.id.toString())
+                  setSearchParams(searchParams)
+                  setSelectedUser(user)
+                }}
               />
             ))}
           </div>
@@ -137,6 +104,8 @@ const Users: React.FC = () => {
       <SideDrawer
         isOpen={!!selectedUser}
         onClose={() => {
+          searchParams.delete('id')
+          setSearchParams(searchParams)
           setSelectedUser(null)
           setIsEditing(false)
         }}
@@ -147,20 +116,51 @@ const Users: React.FC = () => {
             </div>
           )
         }
-        footer={
+        footer={(handleClose) => (
           <div className={styles.drawerFooter}>
-            {renderDrawerFooter()}
+            {isEditing ? (
+              <>
+                <Button 
+                  variant="secondary" 
+                  size="large" 
+                  onClick={() => {
+                    setIsEditing(false)
+                    setEditForm({
+                      first_name: selectedUser?.first_name || '',
+                      last_name: selectedUser?.last_name || '',
+                      email: selectedUser?.email || ''
+                    })
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button variant="primary" size="large" onClick={handleEditSubmit}>
+                  Save
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="secondary" 
+                  size="large" 
+                  onClick={handleClose}
+                >
+                  Close
+                </Button>
+                <Button variant="primary" size="large" onClick={() => setIsEditing(true)}>
+                  Edit
+                </Button>
+              </>
+            )}
           </div>
-        }
+        )}
       >
         {selectedUser && (
           <UserForm
             isEditing={isEditing}
             selectedUser={selectedUser}
             editForm={editForm}
-            onEditFormChange={(field, value) => 
-              setEditForm(prev => ({ ...prev, [field]: value }))
-            }
+            onEditFormChange={handleFormChange}
           />
         )}
       </SideDrawer>

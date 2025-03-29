@@ -10,7 +10,6 @@ interface TopBarProps {
 const TopBar: React.FC<TopBarProps> = ({ title = 'EmployWise' }) => {
 
     const location = useLocation()
-    console.log(location.pathname)
     const [activeLink, setActiveLink] = useState('')
 
     useEffect(() => {
