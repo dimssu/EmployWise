@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { fetchUsers, updateUser } from '../../redux/slices/userSlice'
+import { fetchUsers, updateUser, deleteUser } from '../../redux/slices/userSlice'
 import { Button } from '../../Common/Components/Button/Button'
 import styles from './Users.module.scss'
 import { useSearchParams } from 'react-router-dom'
@@ -55,6 +55,16 @@ const Users: React.FC = () => {
   const handleFormChange = (field: string, value: string) => {
     setEditForm(prev => ({ ...prev, [field]: value }))
     setSelectedUser(prev => prev ? { ...prev, [field]: value } : null)
+  }
+
+  const handleDeleteUser = async () => {
+    if (!selectedUser) return
+    
+    await dispatch(deleteUser(selectedUser.id)).unwrap()
+    searchParams.delete('id')
+    setSearchParams(searchParams)
+    setSelectedUser(null)
+    setIsEditing(false)
   }
 
   return (
@@ -112,7 +122,14 @@ const Users: React.FC = () => {
         header={
           selectedUser && (
             <div className={styles.drawerHeader}>
-              {isEditing ? 'Edit User' : 'User Details'}
+              <span>{isEditing ? 'Edit User' : 'User Details'}</span>
+              <Button
+                variant="danger"
+                size="small"
+                onClick={handleDeleteUser}
+              >
+                Delete
+              </Button>
             </div>
           )
         }

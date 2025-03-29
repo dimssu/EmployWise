@@ -58,6 +58,21 @@ export const updateUser = createAsyncThunk(
   }
 )
 
+export const deleteUser = createAsyncThunk(
+  'users/deleteUser',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await userService.deleteUser(id)
+      toast.success('User deleted successfully')
+      return id
+    } catch (error: unknown) {
+      const err = error as AxiosError<{ error: string }>
+      toast.error(err.response?.data?.error || 'Failed to delete user')
+      return rejectWithValue(err.response?.data?.error || 'Failed to delete user')
+    }
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -94,6 +109,12 @@ const userSlice = createSlice({
         state.loading = false
         state.error = action.payload as string
         toast.error(action.payload as string)
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.users = state.users.filter(user => user.id !== action.payload)
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.error = action.payload as string
       })
   }
 })
