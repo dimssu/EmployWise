@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { userService } from '../../services/userService'
 import { toast } from 'react-toastify'
 import { AxiosError } from 'axios'
+import { userService } from '../../pages/Users/Store/userService'
 
 interface User {
   id: number
@@ -40,6 +40,24 @@ export const fetchUsers = createAsyncThunk(
   }
 )
 
+export const updateUser = createAsyncThunk(
+  'users/updateUser',
+  async (
+    { id, userData }: { id: number; userData: Partial<User> },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await userService.updateUser(id, userData)
+      toast.success('User updated successfully')
+      return response
+    } catch (error: unknown) {
+      const err = error as AxiosError<{ error: string }>
+      toast.error(err.response?.data?.error || 'Failed to update user')
+      return rejectWithValue(err.response?.data?.error || 'Failed to update user')
+    }
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -57,6 +75,22 @@ const userSlice = createSlice({
         state.totalPages = action.payload.total_pages
       })
       .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as string
+        toast.error(action.payload as string)
+      })
+      .addCase(updateUser.pending, (state) => {
+        // state.loading = true
+        state.error = null
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false
+        const updatedUser = action.payload
+        state.users = state.users.map((user) =>
+          user.id === updatedUser.id ? {...updatedUser, avatar: user.avatar} : user
+        )
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
         toast.error(action.payload as string)

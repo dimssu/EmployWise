@@ -1,4 +1,4 @@
-import { api } from '../helpers/apiHelpers'
+import { api } from '../../../helpers/apiHelpers'
 
 interface User {
   id: number
@@ -29,6 +29,6 @@ export const userService = {
 
   async updateUser(id: number, userData: Partial<User>): Promise<User> {
     const response = await api.put<{ data: User }>(`/users/${id}`, userData)
-    return response.data.data
+    return {...response.data, id: id}
   }
 } 
