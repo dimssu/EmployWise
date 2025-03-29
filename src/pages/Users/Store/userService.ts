@@ -28,7 +28,7 @@ export const userService = {
   },
 
   async updateUser(id: number, userData: Partial<User>): Promise<User> {
-    const response = await api.patch<{ data: User }>(`/users/${id}`, userData)
+    const response: any = await api.patch<{ data: User }>(`/users/${id}`, userData)
     return {...response.data, id: id}
   },
 
