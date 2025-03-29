@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --ext ts,tsx --fix",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,scss}\""
   },
@@ -23,27 +21,15 @@
     "sass": "^1.86.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.28.0",
-    "@typescript-eslint/parser": "^8.28.0",
-    "@vitejs/plugin-react": "^4.3.4",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
-    "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^5.1.4"
   }
 }
